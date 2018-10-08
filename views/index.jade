@@ -1,0 +1,45 @@
+extends layout
+
+block content
+  h1= title
+  p Jokas-Webinterface
+
+  // Wrapper
+  #wrapper
+
+    // USER INFO
+    #userInfo
+      h2 Projektinfo
+      p
+        strong Namn:
+        |  <span id='userInfoName'></span>
+        br
+        strong Datum:
+        |  <span id='userInfoAge'></span>
+
+    // /USER INFO
+
+    // USER LIST
+    h2 Projektlista
+    #projectlist
+      table
+        thead
+          th Projektnamn
+          th Datum
+          th Ladda ned?
+          th Radera?
+        tbody
+    // /USER LIST
+
+    // ADD USER
+    h2 Lägg till projekt.
+    #addUser
+      fieldset
+        input#inputUserName(type='text', placeholder='Username')
+        input#inputUserEmail(type='text', placeholder='Email')
+
+        br
+        button#btnAddUser Lägg till
+    // /ADD USER
+
+  // /WRAPPER
