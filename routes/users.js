@@ -1,7 +1,12 @@
+/****************************************************************************
+ * Main jokas Node routes.
+ * **************************************************************************/
 var express = require('express');
 var router = express.Router();
 
-/* GET projectlist. */
+/****************************************************************************
+* GET projectlist.
+*****************************************************************************/
 router.get('/projectlist', function(req, res) {
   var db = req.db;
   var collection = db.get('project');
@@ -10,7 +15,9 @@ router.get('/projectlist', function(req, res) {
   });
 });
 
-/* POST to adduser. */
+/****************************************************************************
+* POST to adduser.
+ *********************************************************'*****************/
 router.post('/adduser', function(req, res) {
   var db = req.db;
   var collection = db.get('project');
@@ -21,7 +28,9 @@ router.post('/adduser', function(req, res) {
   });
 });
 
-/* DELETE to deleteuser. */
+/****************************************************************************
+* DELETE to deleteuser.
+*****************************************************************************/
 router.delete('/deleteuser/:id', function(req, res) {
   var db = req.db;
   var collection = db.get('project');
@@ -30,7 +39,10 @@ router.delete('/deleteuser/:id', function(req, res) {
     res.send((err === null) ? { msg: '' } : { msg:'error: ' + err });
   });
 });
-/* Get data to print. */
+
+/****************************************************************************
+* Get data to print.
+ ******************************************************************************/
 router.get('/printout/:id', function(req, res) {
 var db = req.db;
 var collection = db.get('project');
@@ -38,5 +50,5 @@ collection.find({},{},function(e,docs){
     res.json(docs);
 });
 });
-
+/****************************************************************************/
 module.exports = router;
