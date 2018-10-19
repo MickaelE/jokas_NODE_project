@@ -151,11 +151,21 @@ function addProject(event) {
 ****************************************************************************/
 function printout(event){
     var confirmation = confirm(this.id.value);
+    var textFile = null,
+        makeTextFile = function (text) {
+            var data = new Blob([text], {type: 'text/plain'});
 
-    // Check and make sure the user confirmed
-    if (confirmation === true) {
+            // If we are replacing a previously generated file we need to
+            // manually revoke the object URL to avoid memory leaks.
+            if (textFile !== null) {
+                window.URL.revokeObjectURL(textFile);
+            }
 
-    }
+            textFile = window.URL.createObjectURL(data);
+
+            // returns a URL you can use as a href
+            return textFile;
+        };
 }
 
 /****************************************************************************
