@@ -7,19 +7,19 @@ block content
   // Wrapper
   #wrapper
 
-    // USER INFO
+    // PROJECTS INFO
     #userInfo
       h2 Projektinfo
       p
         strong Namn:
-        |  <span id='userInfoName'></span>
+        |  <span id='projectInfoName'></span>
         br
         strong Datum:
-        |  <span id='userInfoAge'></span>
+        |  <span id='projectInfoEnable'></span>
 
-    // /USER INFO
+    // /PROJECTS INFO
 
-    // USER LIST
+    // PROJECTS LIST
     h2 Projektlista
     #projectlist
       table
@@ -29,17 +29,17 @@ block content
           th Ladda ned?
           th Radera?
         tbody
-    // /USER LIST
+    // /PROJECTS LIST
 
-    // ADD USER
+    // ADD PROJECTS
     h2 Lägg till projekt.
     #addUser
       fieldset
-        input#inputUserName(type='text', placeholder='Username')
-        input#inputUserEmail(type='text', placeholder='Email')
+        input#inputProjectName(type='text', placeholder='project_name')
+        input#inputUserEmail(type='text', placeholder='enabled')
 
         br
         button#btnAddUser Lägg till
-    // /ADD USER
+    // /ADD PROJECTS
 
   // /WRAPPER

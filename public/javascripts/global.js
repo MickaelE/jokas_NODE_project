@@ -14,10 +14,10 @@ $(document).ready(function() {
   populateTable();
 
   // Username link click
-  $('#projectlist table tbody').on('click', 'td a.linkshowuser', showUserInfo);
+  $('#projectlist table tbody').on('click', 'td a.linkshowuser', showProjectInfo);
 
   // Add User button click
-  $('#btnAddUser').on('click', addUser);
+  $('#btnAddUser').on('click', addProject);
 
   // Dowload User link click
     $('#projectlist table tbody').on('click', 'td a.linkdownload', printout);
@@ -51,7 +51,7 @@ function populateTable() {
     $.each(data, function(){
       tableContent += '<tr>';
       tableContent += '<td><a href="#" class="linkshowuser" rel="' + this.project_name + '" title="Show Details">' + this.project_name + '</a></td>';
-      tableContent += '<td>' + this._updated_at + '</td>';
+      tableContent += '<td>' + new Date(this._created_at).toLocaleDateString() + '</td>';
       tableContent += '<td><a href="#" class="linkdownload" rel="'   + this._id + '">Ladda ned</a></td>';
       tableContent += '<td><a href="#" class="linkdeleteuser" rel="' + this._id + '">Radera</a></td>';
       tableContent += '</tr>';
@@ -63,9 +63,9 @@ function populateTable() {
 };
 
 /****************************************************************************
-* Show User Info
+* Show Project Info
  ****************************************************************************/
-function showUserInfo(event) {
+function showProjectInfo(event) {
 
   // Prevent Link from Firing
   event.preventDefault();
@@ -74,46 +74,49 @@ function showUserInfo(event) {
   var thisUserName = $(this).attr('rel');
 
   // Get Index of object based on id value
-  var arrayPosition = projectlistData.map(function(arrayItem) { return arrayItem.username; }).indexOf(thisUserName);
+  var arrayPosition = projectlistData.map(function(arrayItem) { return arrayItem.project_name; }).indexOf(thisUserName);
 
   // Get our User Object
   var thisUserObject = projectlistData[arrayPosition];
-
+   // var confirmation = confirm(projectlistData[0].project_name);
   //Populate Info Box
-  $('#userInfoName').text(thisUserObject.project_name);
-  $('#userInfoAge').text(thisUserObject._updated_at);
-  $('#userInfoGender').text(thisUserObject.enabled);
+  $('#projectInfoName').text(thisUserObject.project_name);
+  $('#projectInfoEnable').text(new Date(thisUserObject._created_at).toLocaleDateString());
 };
 
 /****************************************************************************
 * Add User
 ****************************************************************************/
-function addUser(event) {
+function addProject(event) {
   event.preventDefault();
 
   // Super basic validation - increase errorCount variable if any fields are blank
   var errorCount = 0;
-  $('#addUser input').each(function(index, val) {
+  $('#addProject input').each(function(index, val) {
     if($(this).val() === '') { errorCount++; }
   });
 
   // Check and make sure errorCount's still at zero
   if(errorCount === 0) {
-
+/*
+* "_id" : "0qq8pBmXwf",
+    "enabled" : false,
+    "project_name" : "Sean Plott",
+    "_created_at" : ISODate("2017-10-29T18:45:26.338Z"),
+    "_updated_at" : ISODate("2017-10-29T18:45:26.338Z")
+* */
     // If it is, compile all user info into one object
-    var newUser = {
-      'username': $('#addUser fieldset input#inputUserName').val(),
-      'email': $('#addUser fieldset input#inputUserEmail').val(),
-      'fullname': $('#addUser fieldset input#inputUserFullname').val(),
-      'age': $('#addUser fieldset input#inputUserAge').val(),
-      'location': $('#addUser fieldset input#inputUserLocation').val(),
-      'gender': $('#addUser fieldset input#inputUserGender').val()
+    var newProject = {
+      'project_name': $('#addProject fieldset input#inputProjectName').val(),
+      'enabled': $('#addProject fieldset input#inputEnabled').val(),
+      '_created_at': $('#addProject fieldset input#input_created_at').val(),
+      '_updated_at': $('#addProject fieldset input#input_updated_at').val()
     }
 
     // Use AJAX to post the object to our adduser service
     $.ajax({
       type: 'POST',
-      data: newUser,
+      data: newProject,
       url: '/users/adduser',
       dataType: 'JSON'
     }).done(function( response ) {
@@ -122,7 +125,7 @@ function addUser(event) {
       if (response.msg === '') {
 
         // Clear the form inputs
-        $('#addUser fieldset input').val('');
+        $('#addProject fieldset input').val('');
 
         // Update the table
         populateTable();

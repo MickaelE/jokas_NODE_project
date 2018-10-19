@@ -7,7 +7,7 @@ var logger = require('morgan');
 // Database
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('localhost:27017/jokas');
+var db = monk('192.168.0.60:27017/jokas');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
